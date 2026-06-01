@@ -1,27 +1,34 @@
-#include <iostream>
-using namespace std;
+#ifndef ORDER_H
+#define ORDER_H
 
+#include <string>
+#include "Cart.h"
+
+using namespace std;
 
 class Order {
 private:
     int orderId;
+    string customerName;
+
+    Product orderedItems[50];
+    int quantities[50];
+
+    int itemCount;
     double totalAmount;
 
 public:
-    Order(int id, double total) {
-        orderId = id;
-        totalAmount = total;
-    }
+    Order();
+    Order(int orderId, string customerName);
 
-    void displayOrder() {
-        cout << "\n===== ORDER DETAILS =====" << endl;
-        cout << "Order ID: " << orderId << endl;
-        cout << "Total Amount: $" << totalAmount << endl;
-    }
+    void createOrder(Cart& cart);
+    void displayOrder();
+
+    double getTotalAmount();
+    int getOrderId();
+    string getCustomerName();
+
+    string toFileString();
 };
-int main() {
-    Order order(1, 820.0);
-    order.displayOrder();
 
-    return 0;
-}
+#endif
