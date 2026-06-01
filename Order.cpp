@@ -1,34 +1,86 @@
-#ifndef ORDER_H
-#define ORDER_H
-
-#include <string>
-#include "Cart.h"
+#include "Order.h"
+#include "ShopException.h"
+#include <iostream>
+#include <sstream>
 
 using namespace std;
 
-class Order {
-private:
-    int orderId;
-    string customerName;
+Order::Order() {
+    orderId = 0;
+    customerName = "";
+    itemCount = 0;
+    totalAmount = 0;
+}
 
-    Product orderedItems[50];
-    int quantities[50];
+Order::Order(int orderId, string customerName) {
+    this->orderId = orderId;
+    this->customerName = customerName;
+    itemCount = 0;
+    totalAmount = 0;
+}
 
-    int itemCount;
-    double totalAmount;
+void Order::createOrder(Cart& cart) {
 
-public:
-    Order();
-    Order(int orderId, string customerName);
+    if (cart.getItemCount() == 0) {
+        throw ShopException("Cart is empty!");
+    }
 
-    void createOrder(Cart& cart);
-    void displayOrder();
+    itemCount = cart.getItemCount();
 
-    double getTotalAmount();
-    int getOrderId();
-    string getCustomerName();
+    for (int i = 0; i < itemCount; i++) {
+        orderedItems[i] = cart.getItemAt(i);
+        quantities[i] = cart.getQuantityAt(i);
+    }
 
-    string toFileString();
-};
+    totalAmount = cart.calculateTotal();
+}
 
-#endif
+void Order::displayOrder() {
+
+    cout << "\n===== ORDER SUMMARY =====\n";
+    cout << "Order ID: " << orderId << endl;
+    cout << "Customer: " << customerName << endl;
+
+    for (int i = 0; i < itemCount; i++) {
+
+        cout << orderedItems[i].getName()
+             << " x" << quantities[i]
+             << " = $"
+             << orderedItems[i].getPrice() * quantities[i]
+             << endl;
+    }
+
+    cout << "Total Amount: $" << totalAmount << endl;
+}
+
+double Order::getTotalAmount() {
+    return totalAmount;
+}
+
+int Order::getOrderId() {
+    return orderId;
+}
+
+string Order::getCustomerName() {
+    return customerName;
+}
+
+string Order::toFileString() {
+
+    stringstream ss;
+
+    ss << orderId << ","
+       << customerName << ","
+       << totalAmount << "\n";
+
+    for (int i = 0; i < itemCount; i++) {
+
+        ss << orderedItems[i].getId() << ","
+           << orderedItems[i].getName() << ","
+           << quantities[i] << ","
+           << orderedItems[i].getPrice()
+           << "\n";
+    }
+
+    return ss.str();
+}
