@@ -1,96 +1,81 @@
+#include "Cart.h"
 #include <iostream>
-#include <vector>
 using namespace std;
 
+Cart::Cart() {
+    itemCount = 0;
+}
 
-class Product {
-private:
-    int id;
-    string name;
-    double price;
+void Cart::addItem(Product product, int quantity) {
 
-public:
-    Product(int i, string n, double p) {
-        id = i;
-        name = n;
-        price = p;
+    for (int i = 0; i < itemCount; i++) {
+        if (items[i].getId() == product.getId()) {
+            quantities[i] += quantity;
+            return;
+        }
     }
 
-    double getPrice() {
-        return price;
+    if (itemCount < 50) {
+        items[itemCount] = product;
+        quantities[itemCount] = quantity;
+        itemCount++;
+    }
+}
+
+void Cart::removeItem(int productId) {
+
+    for (int i = 0; i < itemCount; i++) {
+
+        if (items[i].getId() == productId) {
+
+            for (int j = i; j < itemCount - 1; j++) {
+                items[j] = items[j + 1];
+                quantities[j] = quantities[j + 1];
+            }
+
+            itemCount--;
+            return;
+        }
+    }
+}
+
+void Cart::displayCart() {
+
+    cout << "\n===== CART =====\n";
+
+    for (int i = 0; i < itemCount; i++) {
+        cout << items[i].getName()
+             << " x" << quantities[i]
+             << " = $" << items[i].getPrice() * quantities[i]
+             << endl;
     }
 
-    void display() {
-        cout << "ID: " << id
-             << " Name: " << name
-             << " Price: $" << price << endl;
-    }
-};
+    cout << "Total: $" << calculateTotal() << endl;
+}
 
+double Cart::calculateTotal() {
 
-class Cart {
-private:
-    vector<Product> items;
+    double total = 0;
 
-public:
-    void addToCart(Product p) {
-        items.push_back(p);
+    for (int i = 0; i < itemCount; i++) {
+        total += items[i].getPrice() * quantities[i];
     }
 
-    double getTotal() {
-        double total = 0;
+    return total;
+}
 
-        for (auto &p : items)
-            total += p.getPrice();
+void Cart::clearCart() {
+    itemCount = 0;
+}
 
-        return total;
-    }
+int Cart::getItemCount() {
+    return itemCount;
+}
 
-    void showCart() {
-        cout << "\nCart Items:\n";
+Product Cart::getItemAt(int index) {
+    return items[index];
+}
 
-        for (auto &p : items)
-            p.display();
-
-        cout << "Total = $" << getTotal() << endl;
-    }
-};
-
-// ORDER CLASS
-class Order {
-private:
-    int orderId;
-    double totalAmount;
-
-public:
-    Order(int id, double total) {
-        orderId = id;
-        totalAmount = total;
-    }
-
-    void displayOrder() {
-        cout << "\n===== ORDER DETAILS =====" << endl;
-        cout << "Order ID: " << orderId << endl;
-        cout << "Total Amount: $" << totalAmount << endl;
-    }
-};
-
-
-int main() {
-
-    Product p1(101, "Laptop", 800);
-    Product p2(102, "Mouse", 20);
-
-    Cart cart;
-
-    cart.addToCart(p1);
-    cart.addToCart(p2);
-
-    cart.showCart();
-
-    Order order(1, cart.getTotal());
-
-    order.displayOrder();
-
-    return 0;
+int Cart::getQuantityAt(int index) {
+    return quantities[index];
 }
