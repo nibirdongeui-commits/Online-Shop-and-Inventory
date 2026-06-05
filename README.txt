@@ -140,8 +140,10 @@ Sample Product Data
 3 Laptop 90000 5
 
 How to Compile
+inside vs code terminal run this
 
 g++ main.cpp User.cpp Customer.cpp Admin.cpp Product.cpp Inventory.cpp Cart.cpp Order.cpp FileManager.cpp -o shop
+./shop
 
 
 
