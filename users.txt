@@ -1,0 +1,3 @@
+admin admin123 admin
+madan 123 customer
+user1 111 customer
