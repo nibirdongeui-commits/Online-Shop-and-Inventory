@@ -51,24 +51,20 @@ void FileManager::loadProducts(Inventory& inventory)
     file.close();
 }
 
-void FileManager::saveProducts(const Inventory& inventory)
-{
+void FileManager::saveProducts(Inventory& inventory) {
     ofstream file("products.txt");
 
-    if (!file.is_open())
-    {
-        return;
+    if (!file.is_open()) {
+        throw ShopException("Could not open products.txt for saving.");
     }
 
-    vector<Product> products = inventory.getProducts();
+    for (int i = 0; i < inventory.getProductCount(); i++) {
+        Product product = inventory.getProductAt(i);
 
-    for (const Product& product : products)
-    {
         file << product.getId() << ","
              << product.getName() << ","
              << product.getPrice() << ","
-             << product.getQuantity()
-             << endl;
+             << product.getQuantity() << endl;
     }
 
     file.close();
