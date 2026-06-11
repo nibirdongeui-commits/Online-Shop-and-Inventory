@@ -20,8 +20,13 @@ void Customer::browseProducts(Inventory& inventory) {
 void Customer::addToCart(Inventory& inventory) {
     int id, quantity;
 
+    cout << "\n--- Available Products ---" << endl;
+    inventory.displayProducts();
+
     cout << "Enter product ID: ";
     cin >> id;
+
+    Product product = inventory.getProductById(id);
 
     cout << "Enter quantity: ";
     cin >> quantity;
@@ -30,17 +35,13 @@ void Customer::addToCart(Inventory& inventory) {
         throw ShopException("Quantity must be greater than zero.");
     }
 
-    Product product = inventory.getProductById(id);
-
     if (quantity > product.getQuantity()) {
         throw ShopException("Not enough stock available.");
     }
 
     cart.addItem(product, quantity);
-
     cout << "Product added to cart successfully." << endl;
 }
-
 void Customer::removeFromCart() {
     int id;
 

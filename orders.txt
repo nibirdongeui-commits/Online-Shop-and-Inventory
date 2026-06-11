@@ -1,0 +1,12 @@
+1,madan,3000
+2,Keyboard,2,1500
+
+2,madan,50000
+4,Monitor,2,25000
+
+1,madan,50000
+4,Monitor,2,25000
+
+2,madan,450000
+3,Laptop,5,90000
+

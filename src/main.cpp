@@ -18,7 +18,7 @@ int main() {
     try {
         FileManager::loadProducts(inventory);
     }
-    catch (ShopException& e) {
+    catch (const ShopException& e) {
         cout << "Warning: " << e.what() << endl;
         cout << "Program will continue with empty inventory." << endl;
     }
@@ -73,7 +73,7 @@ int main() {
                 delete currentUser;
                 currentUser = nullptr;
             }
-            catch (ShopException& e) {
+            catch (const ShopException& e) {
                 cout << "Error: " << e.what() << endl;
             }
         }
@@ -81,7 +81,7 @@ int main() {
             try {
                 FileManager::saveProducts(inventory);
             }
-            catch (ShopException& e) {
+            catch (const ShopException& e) {
                 cout << "Error while saving products: " << e.what() << endl;
             }
 
@@ -189,7 +189,7 @@ void runUserSession(User* currentUser, Inventory& inventory) {
                 }
             }
         }
-        catch (ShopException& e) {
+        catch (const ShopException& e) {
             cout << "Error: " << e.what() << endl;
         }
 

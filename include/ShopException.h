@@ -6,19 +6,16 @@
 
 using namespace std;
 
-class ShopException : public exception
-{
+class ShopException : public exception {
 private:
     string message;
 
 public:
-    ShopException(string message)
-    {
+    ShopException(const string& message) {
         this->message = message;
     }
 
-    const char* what() const noexcept override
-    {
+    const char* what() const noexcept override {
         return message.c_str();
     }
 };

@@ -17,8 +17,7 @@ void Admin::viewInventory(Inventory &inventory)
     inventory.displayProducts();
 }
 
-void Admin::addProduct(Inventory &inventory)
-{
+void Admin::addProduct(Inventory& inventory) {
     int id, quantity;
     string name;
     double price;
@@ -26,46 +25,51 @@ void Admin::addProduct(Inventory &inventory)
     cout << "Enter product ID: ";
     cin >> id;
 
+    if (id <= 0) {
+        throw ShopException("Invalid product ID.");
+    }
+
+    if (inventory.productExists(id)) {
+        throw ShopException("Product ID already exists.");
+    }
+
     cout << "Enter product name: ";
-    cin.ignore();
-    getline(cin, name);
+    cin >> name;
 
     cout << "Enter product price: ";
     cin >> price;
 
-    cout << "Enter product quantity: ";
-    cin >> quantity;
-
-    if (price <= 0)
-    {
+    if (price <= 0) {
         throw ShopException("Price must be greater than zero.");
     }
 
-    if (quantity < 0)
-    {
+    cout << "Enter product quantity: ";
+    cin >> quantity;
+
+    if (quantity < 0) {
         throw ShopException("Quantity cannot be negative.");
     }
 
     Product product(id, name, price, quantity);
     inventory.addProduct(product);
-
     FileManager::saveProducts(inventory);
 
     cout << "Product added successfully." << endl;
 }
-
-void Admin::updateStock(Inventory &inventory)
-{
+void Admin::updateStock(Inventory& inventory) {
     int id, quantity;
 
     cout << "Enter product ID: ";
     cin >> id;
 
+    if (!inventory.productExists(id)) {
+        throw ShopException("Product not found.");
+    }
+
     cout << "Enter new stock quantity: ";
     cin >> quantity;
 
-    if (quantity < 0)
-    {
+    if (quantity < 0) {
         throw ShopException("Stock quantity cannot be negative.");
     }
 
@@ -75,19 +79,21 @@ void Admin::updateStock(Inventory &inventory)
     cout << "Stock updated successfully." << endl;
 }
 
-void Admin::updatePrice(Inventory &inventory)
-{
+void Admin::updatePrice(Inventory& inventory) {
     int id;
     double price;
 
     cout << "Enter product ID: ";
     cin >> id;
 
+    if (!inventory.productExists(id)) {
+        throw ShopException("Product not found.");
+    }
+
     cout << "Enter new price: ";
     cin >> price;
 
-    if (price <= 0)
-    {
+    if (price <= 0) {
         throw ShopException("Price must be greater than zero.");
     }
 
@@ -96,7 +102,6 @@ void Admin::updatePrice(Inventory &inventory)
 
     cout << "Price updated successfully." << endl;
 }
-
 void Admin::removeProduct(Inventory &inventory)
 {
     int id;
