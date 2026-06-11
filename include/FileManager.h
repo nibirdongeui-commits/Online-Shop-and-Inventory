@@ -11,7 +11,7 @@ class FileManager
 {
 public:
     static void loadProducts(Inventory& inventory);
-    static void saveProducts(const Inventory& inventory);
+    static void saveProducts(Inventory& inventory);
 
     static bool validateLogin(
         const string& username,
