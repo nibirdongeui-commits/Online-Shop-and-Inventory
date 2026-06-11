@@ -139,12 +139,13 @@ Sample Product Data
 2 Keyboard 1500 10
 3 Laptop 90000 5
 
-How to Compile
-inside vs code terminal run this
+How to compile:
 
-g++ main.cpp User.cpp Customer.cpp Admin.cpp Product.cpp Inventory.cpp Cart.cpp Order.cpp FileManager.cpp -o shop
-./shop
+g++ -std=c++17 src/*.cpp -Iinclude -o shop.exe
 
+How to run:
+
+.\shop.exe
 
 
 Notes
