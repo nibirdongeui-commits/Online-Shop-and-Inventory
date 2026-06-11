@@ -28,7 +28,7 @@ public:
     int getOrderId();
     string getCustomerName();
 
-    string toFileString();
+    string toFileString() const;
 };
 
 #endif

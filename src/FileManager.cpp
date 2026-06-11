@@ -1,8 +1,9 @@
 #include "../include/FileManager.h"
+#include "../include/ShopException.h"
 
 #include <fstream>
 #include <sstream>
-#include <vector>
+#include <iostream>
 
 using namespace std;
 

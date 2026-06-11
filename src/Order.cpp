@@ -65,7 +65,7 @@ string Order::getCustomerName() {
     return customerName;
 }
 
-string Order::toFileString() {
+string Order::toFileString() const{
 
     stringstream ss;
 
