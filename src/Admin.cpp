@@ -3,18 +3,22 @@
 #include "FileManager.h"
 #include "ShopException.h"
 
-Admin::Admin() : User() {
+Admin::Admin() : User()
+{
 }
 
-Admin::Admin(string username, string password) : User(username, password) {
+Admin::Admin(string username, string password) : User(username, password)
+{
 }
 
-void Admin::viewInventory(Inventory& inventory) {
+void Admin::viewInventory(Inventory &inventory)
+{
     cout << "\n--- Inventory List ---" << endl;
     inventory.displayProducts();
 }
 
-void Admin::addProduct(Inventory& inventory) {
+void Admin::addProduct(Inventory &inventory)
+{
     int id, quantity;
     string name;
     double price;
@@ -23,7 +27,8 @@ void Admin::addProduct(Inventory& inventory) {
     cin >> id;
 
     cout << "Enter product name: ";
-    cin >> name;
+    cin.ignore();
+    getline(cin, name);
 
     cout << "Enter product price: ";
     cin >> price;
@@ -31,11 +36,13 @@ void Admin::addProduct(Inventory& inventory) {
     cout << "Enter product quantity: ";
     cin >> quantity;
 
-    if (price <= 0) {
+    if (price <= 0)
+    {
         throw ShopException("Price must be greater than zero.");
     }
 
-    if (quantity < 0) {
+    if (quantity < 0)
+    {
         throw ShopException("Quantity cannot be negative.");
     }
 
@@ -47,7 +54,8 @@ void Admin::addProduct(Inventory& inventory) {
     cout << "Product added successfully." << endl;
 }
 
-void Admin::updateStock(Inventory& inventory) {
+void Admin::updateStock(Inventory &inventory)
+{
     int id, quantity;
 
     cout << "Enter product ID: ";
@@ -56,7 +64,8 @@ void Admin::updateStock(Inventory& inventory) {
     cout << "Enter new stock quantity: ";
     cin >> quantity;
 
-    if (quantity < 0) {
+    if (quantity < 0)
+    {
         throw ShopException("Stock quantity cannot be negative.");
     }
 
@@ -66,7 +75,8 @@ void Admin::updateStock(Inventory& inventory) {
     cout << "Stock updated successfully." << endl;
 }
 
-void Admin::updatePrice(Inventory& inventory) {
+void Admin::updatePrice(Inventory &inventory)
+{
     int id;
     double price;
 
@@ -76,7 +86,8 @@ void Admin::updatePrice(Inventory& inventory) {
     cout << "Enter new price: ";
     cin >> price;
 
-    if (price <= 0) {
+    if (price <= 0)
+    {
         throw ShopException("Price must be greater than zero.");
     }
 
@@ -86,7 +97,8 @@ void Admin::updatePrice(Inventory& inventory) {
     cout << "Price updated successfully." << endl;
 }
 
-void Admin::removeProduct(Inventory& inventory) {
+void Admin::removeProduct(Inventory &inventory)
+{
     int id;
 
     cout << "Enter product ID to remove: ";
@@ -98,7 +110,8 @@ void Admin::removeProduct(Inventory& inventory) {
     cout << "Product removed successfully." << endl;
 }
 
-void Admin::showMenu() {
+void Admin::showMenu()
+{
     cout << "\n===== Admin Menu =====" << endl;
     cout << "1. View inventory" << endl;
     cout << "2. Add product" << endl;
@@ -109,6 +122,7 @@ void Admin::showMenu() {
     cout << "Enter your choice: ";
 }
 
-string Admin::getRole() {
+string Admin::getRole()
+{
     return "Admin";
 }

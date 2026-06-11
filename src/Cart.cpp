@@ -20,23 +20,23 @@ void Cart::addItem(Product product, int quantity) {
         quantities[itemCount] = quantity;
         itemCount++;
     }
+    if (itemCount >= 50) {
+    throw ShopException("Cart is full. Cannot add more items.");
+}
 }
 
 void Cart::removeItem(int productId) {
-
     for (int i = 0; i < itemCount; i++) {
-
         if (items[i].getId() == productId) {
-
             for (int j = i; j < itemCount - 1; j++) {
                 items[j] = items[j + 1];
                 quantities[j] = quantities[j + 1];
             }
-
             itemCount--;
             return;
         }
     }
+    throw ShopException("Product ID not found in cart.");
 }
 
 void Cart::displayCart() {
