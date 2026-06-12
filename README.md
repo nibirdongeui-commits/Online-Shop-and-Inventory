@@ -141,7 +141,7 @@ Sample Product Data
 
 How to compile:
 
-g++ -std=c++17 src/*.cpp -Iinclude -o shop.exe
+mingw32-make
 
 How to run:
 
